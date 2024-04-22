@@ -1,0 +1,87 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 22/04/2024 15:04:14
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :
+00000000                             3  * Written by :
+00000000                             4  * Date       :
+00000000                             5  * Description:
+00000000                             6  *-----------------------------------------------------------
+00001000                             7      ORG    $1000
+00001000                             8  START:                  ; first instruction of program
+00001000  343C 0010                  9      move #16, d2
+00001004                            10  LOOP:
+00001004                            11  INPUT:
+00001004  103C 0004                 12      move.b #4, d0
+00001008  4E4F                      13      trap #15
+0000100A  1A01                      14      move.b d1, d5
+0000100C  103C 0004                 15      move.b #4, d0
+00001010  4E4F                      16      trap #15
+00001012  1C01                      17      move.b d1, d6
+00001014  103C 0004                 18      move.b #4, d0
+00001018  4E4F                      19      trap #15
+0000101A  1E01                      20      move.b d1, d7
+0000101C                            21  OPERATE:
+0000101C  0C05 0000                 22      cmpi.b  #0, d5
+00001020  6700 0022                 23      beq ADD
+00001024  0C05 0001                 24      cmpi.b  #1, d5
+00001028  6700 0022                 25      beq SUB
+0000102C  0C05 0002                 26      cmpi.b  #2, d5
+00001030  6700 0020                 27      beq MUL
+00001034  0C05 0003                 28      cmpi.b  #3, d5
+00001038  6700 0020                 29      beq DIV
+0000103C  323C 0100                 30      move #$100, d1
+00001040  6000 0020                 31      bra OUTPUT
+00001044                            32  ADD:
+00001044  DE46                      33      add d6,d7
+00001046  3207                      34      move d7, d1
+00001048  6000 0018                 35      bra OUTPUT
+0000104C                            36  SUB:
+Line 37 ERROR: Invalid addressing mode
+0000104C                            37      subq d6,d7
+0000104C  3207                      38      move d7, d1
+0000104E  6000 0012                 39      bra OUTPUT
+00001052                            40  MUL:
+00001052  CEC6                      41      mulu d6,d7
+00001054  3207                      42      move d7, d1
+00001056  6000 000A                 43      bra OUTPUT
+0000105A                            44  DIV:
+0000105A  8EC6                      45      divu d6,d7
+0000105C  3207                      46      move d7, d1
+0000105E  6000 0002                 47      bra OUTPUT
+00001062                            48  OUTPUT:
+00001062  103C 000F                 49      move.b #15, d0
+00001066  4E4F                      50      trap #15
+00001068                            51  CLEAR:
+00001068  4240                      52      clr d0
+0000106A  4241                      53      clr d1
+0000106C  4245                      54      clr d5
+0000106E  4246                      55      clr d6
+00001070  4247                      56      clr d7
+00001072  6090                      57      bra LOOP
+00001074                            58  
+00001074                            59  
+00001074  FFFF FFFF                 60      SIMHALT             ; halt simulator
+00001078                            61  
+00001078                            62  * Put variables and constants here
+00001078                            63  
+00001078                            64      END    START        ; last line of source
+
+1 error detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+ADD                 1044
+CLEAR               1068
+DIV                 105A
+INPUT               1004
+LOOP                1004
+MUL                 1052
+OPERATE             101C
+OUTPUT              1062
+START               1000
+SUB                 104C

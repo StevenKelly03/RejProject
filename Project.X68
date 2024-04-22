@@ -8,9 +8,17 @@
 START:                  ; first instruction of program
     move #16, d2
 LOOP:
+INPUT:
     move.b #4, d0
     trap #15
     move.b d1, d5
+    move.b #4, d0
+    trap #15
+    move.b d1, d6
+    move.b #4, d0
+    trap #15
+    move.b d1, d7
+OPERATE:
     cmpi.b  #0, d5
     beq ADD
     cmpi.b  #1, d5
@@ -22,24 +30,30 @@ LOOP:
     move #$100, d1
     bra OUTPUT
 ADD:
-    add d0,d3
-    move #$200, d1
+    add d6,d7
+    move d7, d1
     bra OUTPUT
 SUB:
-    add d0,d3
-    move #$300, d1
+    sub d6,d7
+    move d7, d1
     bra OUTPUT
 MUL:
-    add d0,d3
-    move #$400, d1
+    mulu d6,d7
+    move d7, d1
     bra OUTPUT
 DIV:
-    add d0,d3
-    move #$500, d1
+    divu d6,d7
+    move d7, d1
     bra OUTPUT
 OUTPUT:
     move.b #15, d0
     trap #15
+CLEAR:
+    clr d0
+    clr d1
+    clr d5
+    clr d6
+    clr d7
     bra LOOP
 
 
@@ -48,6 +62,7 @@ OUTPUT:
 * Put variables and constants here
 
     END    START        ; last line of source
+
 
 *~Font name~Courier New~
 *~Font size~10~
