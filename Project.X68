@@ -6,18 +6,18 @@
 *-----------------------------------------------------------
     ORG    $1000
 START:                  ; first instruction of program
-    move #16, d2
+    move #10, d2
 LOOP:
 INPUT:
+    move.b #4, d0
+    trap #15
+    move.b d1, d7
     move.b #4, d0
     trap #15
     move.b d1, d5
     move.b #4, d0
     trap #15
     move.b d1, d6
-    move.b #4, d0
-    trap #15
-    move.b d1, d7
 OPERATE:
     cmpi.b  #0, d5
     beq ADD
@@ -62,6 +62,7 @@ CLEAR:
 * Put variables and constants here
 
     END    START        ; last line of source
+
 
 
 *~Font name~Courier New~
